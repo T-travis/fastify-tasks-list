@@ -2,7 +2,13 @@ const fastify = require("fastify")({
   logger: true,
 });
 require("dotenv").config();
-//require("./sequelizeOrm");  // TODO: convert Items.js to using postgreSQL
+
+// register postgres sequelize plugin
+fastify.register(require('./database_connection'));
+
+// register tasksModel
+const { tasksModel } = require('./models/task');
+fastify.register(tasksModel);
 
 // register swagger plugin
 fastify.register(require("fastify-swagger"), {
@@ -14,7 +20,8 @@ fastify.register(require("fastify-swagger"), {
 });
 
 // register tasks routes plugin
-fastify.register(require('./routes/tasks'));
+fastify.register(require('./routes/tasks'), fastify.pg);
+
 const PORT = process.env.PORT || 5000;
 
 const startServer = async () => {
@@ -27,6 +34,9 @@ const startServer = async () => {
 
 startServer();
 
+
+// Decorator is a structural design pattern that lets you attach new behaviors to objects by 
+// placing these objects inside special wrapper objects that contain the behaviors
 
 // https://www.fastify.io/docs/latest/Getting-Started/
 // https://github.com/hsynlms/sequelize-fastify

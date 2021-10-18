@@ -1,38 +1,62 @@
-let tasks = require("../Items");
 const { v4: uuidv4 } = require("uuid");
+const { Task } = require('../models/task');
 
-const getTasks = (request, reply) => {
-  reply.send(tasks);
+const getTasks = async (request, reply) => {
+  try {
+    const tasks = await Task.getTasks();
+    reply.send(tasks);
+  } catch(error) {
+    reply.code(500).send(error);
+  }
 };
 
-const getTask = (request, reply) => {
-  const { id } = request.params;
-  const task = tasks.find((task) => task.id === id);
-  reply.send(task);
+const getTask = async (request, reply) => {
+  try {
+    const { id } = request.params;
+    const task = await Task.getTask(id);
+    reply.send(task);
+  } catch(error) {
+    reply.code(500).send(error);
+  }
 };
 
-const postTask = (request, reply) => {
-  const { name } = request.body;
-  const task = {
-    id: uuidv4(),
-    name,
-  };
-  tasks = [...tasks, task];
-  reply.code(201).send(task);
+const postTask = async (request, reply) => {
+  try {
+    const { name } = request.body;
+    const task = {
+      id: uuidv4(),
+      name,
+    };
+    const newTask = Task.postTask({ name });
+    reply.code(201).send(newTask)
+  } catch(error) {
+    reply.code(500).send(error);
+  }
 };
 
-const deleteTask = (request, reply) => {
-  const { id } = request.params;
-  tasks = tasks.filter((task) => task.id !== id);
-  reply.send({ message: `Task ${id} has been deleted` });
+const deleteTask = async (request, reply) => {
+  try {
+    const { id } = request.params;
+    await Task.deleteTask(id);
+    reply.send({ message: `Task ${id} has been deleted` });
+  } catch(error) {
+    reply.code(500).send(error);
+  }
 };
 
-const updateTask = (request, reply) => {
-  const { id } = request.params;
-  const { name } = request.body;
-  tasks = tasks.map(task => (task.id === id ? { id, name } : task));
-  reply.send({ id, name });
+const updateTask = async (request, reply) => {
+  try {
+    const { id } = request.params;
+    const { name } = request.body;
+    const task = await Task.updateTask(id, name);
+    reply.send(task);
+  } catch(error) {
+    reply.code(500).send(error);
+  }
+  
 };
+
+
 
 module.exports = {
   getTasks,

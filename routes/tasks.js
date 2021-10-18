@@ -5,6 +5,7 @@ const {
   deleteTask,
   updateTask,
 } = require("../controllers/tasksController");
+
 const {
   getTasksOptions,
   getTaskOptions,
@@ -13,8 +14,9 @@ const {
   updateTaskOptions,
 } = require("../schemas/tasksSchema");
 
-// register tasks routes as a plugin
+
 function taskRoutes(fastify, options, done) {
+
   // get all tasks
   fastify.get("/tasks", getTasksOptions, getTasks);
 
