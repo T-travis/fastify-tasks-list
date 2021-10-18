@@ -1,4 +1,3 @@
-const pg = require('pg');
 const fp = require('fastify-plugin');
 const { Sequelize } = require('sequelize');
 const config = require("dotenv").config();

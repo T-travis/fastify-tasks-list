@@ -1,4 +1,3 @@
-const { v4: uuidv4 } = require("uuid");
 const { Task } = require('../models/task');
 
 const getTasks = async (request, reply) => {
@@ -23,10 +22,6 @@ const getTask = async (request, reply) => {
 const postTask = async (request, reply) => {
   try {
     const { name } = request.body;
-    const task = {
-      id: uuidv4(),
-      name,
-    };
     const newTask = Task.postTask({ name });
     reply.code(201).send(newTask)
   } catch(error) {

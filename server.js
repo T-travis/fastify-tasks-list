@@ -33,12 +33,3 @@ const startServer = async () => {
 };
 
 startServer();
-
-
-// Decorator is a structural design pattern that lets you attach new behaviors to objects by 
-// placing these objects inside special wrapper objects that contain the behaviors
-
-// https://www.fastify.io/docs/latest/Getting-Started/
-// https://github.com/hsynlms/sequelize-fastify
-// https://sequelize.org/master/
-// https://dev.to/amis/fastify-plugin-system-5a4b
