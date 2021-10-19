@@ -22,7 +22,7 @@ const getTask = async (request, reply) => {
 const postTask = async (request, reply) => {
   try {
     const { name } = request.body;
-    const newTask = Task.postTask({ name });
+    const newTask = await Task.postTask({ name });
     reply.code(201).send(newTask)
   } catch(error) {
     reply.code(500).send(error);
