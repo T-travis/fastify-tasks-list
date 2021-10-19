@@ -20,8 +20,6 @@ async function databaseConnection(fastify, options, done) {
     console.error('Unable to connect to the database:', error);
   }
 
-  Task.sync({ alter: true }); // TODO: not recommended for prod, look into migrations
-
   done();
 }
 

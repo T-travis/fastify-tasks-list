@@ -57,6 +57,8 @@ function tasksModel(fastify, options, done) {
     modelName: 'Task',
   });
 
+  Task.sync({ alter: true }); // TODO: not recommended for prod, look into migrations
+
   done();
 }
 
